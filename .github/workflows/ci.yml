@@ -34,14 +34,28 @@ jobs:
           terraform_version: 1.5.0
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Initialize Terraform
+      #- name: Initialize Terraform
+      #  id: init
+      #  run: terraform fmt -check -recursive
+      #  continue-on-error: true
+#
+      #- name: Validate Terraform Configuration
+      #  id: validate
+      #  run: terraform validate
+
+      - name: Terraform Init
         id: init
+        run: terraform init
+
+      - name: Format Check
+        id: fmt
         run: terraform fmt -check -recursive
         continue-on-error: true
 
       - name: Validate Terraform Configuration
         id: validate
         run: terraform validate
+
 
       - name: Run TF Sec
         uses: aquasecurity/tfsec-action@v1.0.0
