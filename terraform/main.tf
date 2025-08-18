@@ -3,6 +3,7 @@ terraform {
   # Configure Terraform Cloud at backend
   cloud {
     organization    = "Deep_Space"
+
     workspaces {
       name          = "practice-ec2-terraform"
     }
