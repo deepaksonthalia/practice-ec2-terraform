@@ -49,8 +49,7 @@ jobs:
       # Step 4: Initialize Terraform
       - name: Terraform Init
         id: init
-        #run: terraform init
-        run: terraform init -backend-config="workspace_name=${{ env.TF_WORKSPACE }}"
+        run: terraform init
 
       # Introduced from online
       - name: Terraform Format
