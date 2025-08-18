@@ -4,10 +4,10 @@ name: 'CI - Validate Infrastructure'
 on:
   pull_request:
     branches:
-      - '*'
+      - '**'
   push:
     branches:
-      - '*'
+      - '**'
   workflow_dispatch: # Allow manual trigger
 env:
   TF_LOG: "INFO"
@@ -25,6 +25,7 @@ jobs:
         working-directory: ./terraform
 
     steps: 
+      # Checkout source code
       - name: Checkout Repository
         uses: actions/checkout@v4
       
@@ -38,14 +39,15 @@ jobs:
       #  id: init
       #  run: terraform fmt -check -recursive
       #  continue-on-error: true
-#
+      #
       #- name: Validate Terraform Configuration
       #  id: validate
       #  run: terraform validate
 
       - name: Terraform Init
         id: init
-        run: terraform init
+      # run: terraform init
+        run: terraform init -backend-config="workspace_name=${{ env.TF_WORKSPACE }}"
 
       - name: Format Check
         id: fmt
@@ -56,13 +58,26 @@ jobs:
         id: validate
         run: terraform validate
 
+      # Terraform Plan (optional but recommended)
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -var-file="terraform.tfvars"
+        continue-on-error: true
 
       - name: Run TF Sec
+        id: tfsec
         uses: aquasecurity/tfsec-action@v1.0.0
         continue-on-error: true
 
-      - name: Run TFLint
+      # Linting with TFLint
+      - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v3
+
+      - name: Run TFLint
+        id: tflint
+        run: |
+          tflint --init
+          tflint
         continue-on-error: true
 
       - name: Post Validation Results
@@ -70,6 +85,9 @@ jobs:
         run: |
           echo "Format Check: ${{ steps.fmt.outcome }}"
           echo "Validation: ${{ steps.validate.outcome }}"
+          echo "Terraform Plan: ${{ steps.plan.outcome }}"
+          echo "TFsec: ${{ steps.tfsec.outcome }}"
+          echo "TFLint: ${{ steps.tflint.outcome }}"
 
 
             
