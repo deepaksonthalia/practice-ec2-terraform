@@ -48,6 +48,10 @@ jobs:
         id: init
         run: terraform init 
 
+      # Added
+      - name: Terraform Format
+        run: terraform fmt -recursive
+      
       - name: Format Check
         id: fmt
         run: terraform fmt -check -recursive
@@ -61,9 +65,9 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -var-file="terraform.tfvars"
-        continue-on-error: true
+       # continue-on-error: true
 
-      - name: Run TF Sec
+      - name: Run TFSec
         id: tfsec
         uses: aquasecurity/tfsec-action@v1.0.0
         continue-on-error: true
@@ -87,7 +91,4 @@ jobs:
           echo "Terraform Plan: ${{ steps.plan.outcome }}"
           echo "TFsec: ${{ steps.tfsec.outcome }}"
           echo "TFLint: ${{ steps.tflint.outcome }}"
-
-
-            
   
