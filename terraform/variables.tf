@@ -34,7 +34,7 @@ variable "instance_type" {
 variable "instance_ami" {
     description = "EC2 instance image id"
     type        = string
-    default     = "ami-0de716d6197524dd9"   
+    default     = "ami-0144277607031eca2"   
 }
 
 #instance name
