@@ -49,7 +49,16 @@ jobs:
       # Step 4: Initialize Terraform
       - name: Terraform Init
         id: init
-        run: terraform init
+        #run: terraform init
+        run: terraform init -backend-config="workspace_name=${{ env.TF_WORKSPACE }}"
+
+      # Introduced from online
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
+
+      # Introduced from online
+      - name: Terraform Validate
+        run: terraform validate
 
       # Step 5: Plan Infrastructure Changes
       - name: Terraform Plan
@@ -65,7 +74,8 @@ jobs:
 
       # Step 7: Verify Deployment
       - name: Verify Deployment
-        if: steps.apply.outcome == 'success'
+        #if: steps.apply.outcome == 'success'
+        if: success()
         run: |
           echo "Deployment completed successfully"
           terraform output
