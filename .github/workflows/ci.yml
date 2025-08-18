@@ -46,8 +46,7 @@ jobs:
 
       - name: Terraform Init
         id: init
-      # run: terraform init
-        run: terraform init -backend-config="workspace_name=${{ env.TF_WORKSPACE }}"
+        run: terraform init 
 
       - name: Format Check
         id: fmt
