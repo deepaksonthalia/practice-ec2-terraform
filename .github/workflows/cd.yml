@@ -9,8 +9,8 @@ on:
 
 # Required for deployment
 env:
- # TF_CLOUD_ORGANIZATION: "Deep_Space"
- # TF_WORKSPACE: "practice-ec2-terraform"
+  TF_CLOUD_ORGANIZATION: "Deep_Space"
+  TF_WORKSPACE: "practice-ec2-terraform"
   TF_LOG: "INFO"
 
 jobs:
