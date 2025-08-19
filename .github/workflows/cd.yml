@@ -69,11 +69,11 @@ jobs:
       #continue-on-error: true
 
     # Step 6: Apply Changes
-    - name: Terraform Apply
-      id: apply
-      if: success() && github.ref == 'refs/heads/main'
-      #if: github.ref == 'refs/heads/main' && steps.plan.outcome == 'success'
-      run: terraform apply -auto-approve -input=false
+    #- name: Terraform Apply
+    #  id: apply
+     # if: success() && github.ref == 'refs/heads/main'
+     # #if: github.ref == 'refs/heads/main' && steps.plan.outcome == 'success'
+   #   run: terraform apply -auto-approve -input=false
 
     # Step 7: Verify Deployment
     - name: Verify Deployment
