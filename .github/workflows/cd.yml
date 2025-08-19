@@ -9,8 +9,8 @@ on:
 
 # Required for deployment
 env:
-  TF_CLOUD_ORGANIZATION: "Deep_Space"
-  TF_WORKSPACE: "practice-ec2-terraform"
+ # TF_CLOUD_ORGANIZATION: "Deep_Space"
+ # TF_WORKSPACE: "practice-ec2-terraform"
   TF_LOG: "INFO"
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
     name: 'Deploy to AWS'
     runs-on: ubuntu-latest
     
-    # Only run if CI workflow passes
+   # # Only run if CI workflow passes
    # needs: []  # We'll configure this after testing
 
     defaults:
@@ -69,11 +69,11 @@ jobs:
       #continue-on-error: true
 
     # Step 6: Apply Changes
-    - name: Terraform Apply
-      id: apply
-      if: success() && github.ref == 'refs/heads/main'
-      #if: github.ref == 'refs/heads/main' && steps.plan.outcome == 'success'
-      run: terraform apply -auto-approve -input=false
+   # - name: Terraform Apply
+    #  id: apply
+     # if: success() && github.ref == 'refs/heads/main'
+     # #if: github.ref == 'refs/heads/main' && steps.plan.outcome == 'success'
+     # run: terraform apply -auto-approve -input=false
 
     # Step 7: Verify Deployment
     - name: Verify Deployment
@@ -81,6 +81,7 @@ jobs:
       if: success()
       run: |
         echo "Deployment completed successfully"
+        # RUNNING terraform output is safe, but outputs won't change without apply
         terraform output
 
     # Step 8: Notify on Failure
