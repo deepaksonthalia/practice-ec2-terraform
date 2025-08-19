@@ -10,7 +10,7 @@ subnet_cidr = "10.0.1.0/24"
 # EC2 Configuration
 
 instance_type = "t2.micro"
-instance_ami = "ami-0144277607031eca2"
+instance_ami = "ami-00ca32bbc84273381"
 instance_name = "web-server"
 
 # Environment
